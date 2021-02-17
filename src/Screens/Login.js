@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'; // funcs 
 
-import Logo from '../Assets/PNG/Android/logo.png'
-import colors from './colors.js'
+
+import Logo from '../../Assets/PNG/Android/logo.png'
+import colors from '../colors.js'
 import {
   //SafeAreaView, // div p ios
   StyleSheet, // como se fosse css
@@ -18,26 +19,17 @@ import {
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
-const FormLogin = () =>{
+const FormLogin = ({ navigation }) =>{
   return(
     <View>
     <TextInput
-        style={{
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 0, 
-        }}
-        
-        defaultValue="Email"
+        style={ styles.input }      
+        placeholder="Email"
       />
       <TextInput
-        style={{
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 0
-          
-        }}
-        defaultValue="Senha"
+        style={ styles.input }
+        secureTextEntry={true}
+        placeholder="Senha"
       />
       <TouchableOpacity
          style={styles.buttonPurple}
@@ -51,7 +43,7 @@ const FormLogin = () =>{
   )
 }
 
-const CreateAccount = () =>{
+const CreateAccount = ({ navigation }) =>{
   return(
     <View> 
 
@@ -61,9 +53,9 @@ const CreateAccount = () =>{
 
     <TouchableOpacity
          style={styles.buttonWhite}
-         onPress={() => {
-          alert('Botão pressionado');
-        }}
+         onPress={ () => {
+          navigate('CreateAccount')
+         }}
        >
          <Text style={styles.buttonCreateAccount}> CRIAR NOVA CONTA </Text>
         </TouchableOpacity>
@@ -75,7 +67,7 @@ const CreateAccount = () =>{
 
 
 
-const App = () => {
+const Login = () => {
   //aqui em cima posso criar uma logica, porrrada de 
   return (
     <SafeAreaView style={styles.container}>
@@ -104,7 +96,7 @@ const App = () => {
 const styles = StyleSheet.create({  //basicamente o css
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     marginHorizontal: 20,
     backgroundColor: colors.background,
   }, 
@@ -118,7 +110,6 @@ const styles = StyleSheet.create({  //basicamente o css
   logoImg: {
     width:365,
     height:145,
-    marginTop: 80,
     marginBottom: 25,
     alignItems: "center",
     justifyContent: "center",
@@ -159,9 +150,15 @@ const styles = StyleSheet.create({  //basicamente o css
     alignItems:'center',
     color: colors.strong_purple,
   },
+  input: {   
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 0
+
+  },
   
 
   
 });
 
-export default App;
+export default Login;
