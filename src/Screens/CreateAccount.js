@@ -285,9 +285,9 @@ const Ask5 = () =>{
   </View>
   )
 }
-const CreateAccountForm = () =>{
+const CreateAccount = ({navigate}) =>{
   return(
-    <View>
+    <View style = {styles.container}>
         <Image source={Logo} 
         style={styles.logoImg} /> 
 
@@ -318,22 +318,6 @@ const CreateAccountForm = () =>{
     </View>
   )
 }
-
-
-//criar logica de páginas aqui
-const CreateAccount = () =>{
-    return(
-      <View>    
-        {/* <Ask5/> */}
-        <CreateAccountForm/>
-
-
-
-
-      </View>
-    )
-}  
-
 
 
 const styles = StyleSheet.create({  //basicamente o css
@@ -394,7 +378,9 @@ const styles = StyleSheet.create({  //basicamente o css
       alignItems:'center',
       color: colors.strong_purple,
     },
-    input: {   
+    input: {  
+      padding: 10,
+      marginBottom: 10,
       height: 40,
       borderColor: 'gray',
       borderWidth: 0
