@@ -1,16 +1,12 @@
-const express = require('express');
-const authMiddleware = require('../middlewares/auth');
 
 const Project = require('../models/Project');
 const Task = require('../models/Task');
 
-
-const router = express.Router();
-
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 //rota de listagem
-router.get('/', async (req, res) => {
+// router.get('/', 
+exports.index = async (req, res) => {
     try {
         const projects = await Project.find().populate(['user', 'tasks']);
 
@@ -19,10 +15,11 @@ router.get('/', async (req, res) => {
     } catch (err) {
         return res.status(400).send({ error: 'Error loading projects' });    
     }
-});
+};
 
-//rota de projeto
-router.get('/:projectId', async (req, res) => {
+// rota de projeto
+// router.get('/:projectId', 
+exports.show = async (req, res) => {
     try {
         const project = await Project.findById(req.params.projectId).populate(['user', 'tasks']);
 
@@ -31,10 +28,11 @@ router.get('/:projectId', async (req, res) => {
     } catch (err) {
         return res.status(400).send({ error: 'Error loading project' });    
     }    
-});
+};
 
 //rota de criação
-router.post('/', async (req, res) => {
+// router.post('/', 
+exports.create = async (req, res) => {
     try {
         const { title, description, tasks } = req.body;
 
@@ -56,10 +54,11 @@ router.post('/', async (req, res) => {
         console.log(err);
         return res.status(400).send({ error: 'Error creating new project' });
     }
-});
+};
 
 //rota de atualizacao
-router.put('/:projectId', async (req, res) => {
+// router.put('/:projectId', 
+exports.update = async (req, res) => {
     try {
         const { title, description, tasks } = req.body;
 
@@ -87,10 +86,11 @@ router.put('/:projectId', async (req, res) => {
         console.log(err);
         return res.status(400).send({ error: 'Error updating new project' });
     }
-});
+};
 
-//rota delete
-router.delete('/:projectId', async (req, res) => {
+// rota delete
+// router.delete('/:projectId', 
+exports.destroy = async (req, res) => {
     try {
         await Project.findByIdAndRemove(req.params.projectId).populate('user');
 
@@ -99,7 +99,6 @@ router.delete('/:projectId', async (req, res) => {
     } catch (err) {
         return res.status(400).send({ error: 'Error removing project' });    
     } 
-});
+};
 
-
-module.exports = app => app.use('/projects', router);
+// module.exports = app => app.use('/projects', router);

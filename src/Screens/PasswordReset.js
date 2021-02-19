@@ -10,29 +10,35 @@ import {
 import Logo from '../../Assets/PNG/Android/logo.png'
 import colors from '../colors.js'
 
+
+//ip localhost 10.0.2.2
 // import { Container } from './styles';
 const PasswordReset = () =>{
-    return(
-      <View>
-        <Text style={styles.text}>
-             DIGITE SEU EMAIL, PARA ENVIO DE TOKEN DE RECUPERAÇÃO
-        </Text> 
+    
+  const [user,setUser]=React.useState(null);
+  const [email,setEmail]=React.useState(null);
 
-        <TextInput
-            style={ styles.input }      
-            placeholder="Email"
-            />
+  return(
+    <View>
+      <Text style={styles.text}>
+          DIGITE SEU EMAIL, PARA ENVIO DE TOKEN DE RECUPERAÇÃO
+      </Text> 
 
-            <TouchableOpacity
-            style={styles.buttonPurple}
-            onPress={() => {
-                alert('Botão pressionado');
-            }}
-            > 
+      <TextInput
+          style={ styles.input }      
+          placeholder="Email"
+          />
 
-            <Text style={styles.buttonLogin}> ENVIAR </Text>
-            </TouchableOpacity>
-        </View>
+          <TouchableOpacity
+          style={styles.buttonPurple}
+          onPress={() => {
+              alert('Botão pressionado');
+          }}
+          > 
+
+          <Text style={styles.buttonLogin}> ENVIAR </Text>
+          </TouchableOpacity>
+      </View>
     )
 }  
 

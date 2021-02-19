@@ -286,6 +286,11 @@ const Ask5 = () =>{
   )
 }
 const CreateAccount = ({navigate}) =>{
+
+  const [user,setUser]=React.useState(null);
+  const [email,setEmail]=React.useState(null);
+  const [password,setPassword]=React.useState(null);
+
   return(
     <View style = {styles.container}>
         <Image source={Logo} 

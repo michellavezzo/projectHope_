@@ -1,8 +1,10 @@
 //import React, { Fragment } from 'react'; // funcs 
-import * as React from 'react';
+import React, { useState, useCallback } from 'react';
 
 import Logo from '../../Assets/PNG/Android/logo.png'
 import colors from '../colors.js'
+import api from '../services/api'
+
 import {
   //SafeAreaView, // div p ios
   StyleSheet, // como se fosse css
@@ -15,76 +17,79 @@ import {
   Button,
   SafeAreaView,
   TouchableOpacity,
+  AsyncStorage,
+  Alert, 
 } from 'react-native'; //template react componentes p celular
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-// funcoes movidas direto para a principal pois navigation nao funcionava, pesquisar dps
-// const FormLogin = ({ navigation }) =>{
-//   return(
-//     <View>
-//     <TextInput
-//         style={ styles.input }      
-//         placeholder="Email"
-//       />
-//       <TextInput
-//         style={ styles.input }
-//         secureTextEntry={true}
-//         placeholder="Senha"
-//       />
-//       <TouchableOpacity
-//          style={styles.buttonPurple}
-//          onPress={() => {
-//           alert('Botão pressionado');
-//         }}
-//        > 
-//          <Text style={styles.buttonLogin}> ENTRAR </Text>
-//         </TouchableOpacity>
-//   </View>
-//   )
-// }
-
-// const CreateAccount = ({ navigation }) =>{
-//   return(
-//     <View> 
-
-//     <Text style={styles.text}>
-//       NÃO POSSUI CONTA?
-//     </Text> 
-
-//     <TouchableOpacity 
-//          style={styles.buttonWhite}
-//          onPress = {() => navigation.navigate('CreateAccount')}
-         
-//        >
-//          <Text style={styles.buttonCreateAccount}> CRIAR NOVA CONTA </Text>
-//         </TouchableOpacity>
-
-//     </View>
-
-//   )
-// }
 
 const Login = ({ navigation }) => {
+
+  const [user, setUser]= useState(null);
+  const [email,setEmail]= useState("michassa1l@michel.com");
+  const [password, setPassword]= useState("123");
+  const [errorMessage, setErrorMessage]= useState(null); // isso foi um teste apagar
+  //const [response, setResponse]= React.useState
+
+
+  const signIn = useCallback(() => {
+    try {
+      console.log('amigo estou aqui');
+
+      api.post('http://192.168.27.108:3000/authenticate', {
+        email, password,
+      }).then(res => {
+        const { user, token } = res.data;
+
+        console.log('amigo estou aqui wuuuuuuuu');
+
+        AsyncStorage.multiSet([
+          ['@projectHope: token', token],
+          ['@projectHope: user',  JSON.stringify(user)],
+        ]);
+
+        console.log(res);
+      }).catch(error => {
+        console.log(error);
+      })
+      
+      Alert.alert('LOgin')
+    } catch(err) {
+      console.log('teste err', err);
+    }
+  }, [email, password]);
+   
+
   return (
     <SafeAreaView style={styles.container}>
-        <Image source={Logo} 
+      <Image source={Logo} 
         style={styles.logoImg} /> 
+
+      <View>
+      <Text style={styles.text}> {email} - {password} </Text>
+      {errorMessage && <Text> {errorMessage}</Text>}
+      </View> 
 
       <View> 
       <TextInput
         style={ styles.input }      
         placeholder="Email"
+        onChangeText={ setEmail }
+        value={ email }
       />
 
       <TextInput
         style={ styles.input }
         secureTextEntry={true}
         placeholder="Senha"
+        onChangeText={ setPassword }
+        value={ password }
       />
 
       <TouchableOpacity
-         style={styles.buttonPurple}
-         onPress = {() => navigation.navigate('Home')}
+        style={styles.buttonPurple}
+        //onPress = {() => navigation.navigate('Home')}
+        //onPress = {() => this.signIn }
+        onPress={ signIn }
       > 
          <Text style={styles.buttonLogin}> ENTRAR </Text>
       </TouchableOpacity>
